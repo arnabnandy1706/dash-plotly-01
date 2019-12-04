@@ -45,20 +45,17 @@ Datas = {}
 for index, row in dataFrame.iterrows():
     Countries.append(row['CountryName'])
 
-#print(Countries)
 
 Years = list(dataFrame.columns)[3:]
 Datas['x'] = Years
 
-#for country in Countries:
-    
-    #for head in headers:
 
-print(Datas)
 
 data = []
 
 for indx in dataFrame.index:
+    Datas = {}
+    Datas['x'] = Years
     '''
     print(
         dataFrame['YEAR_2019'][indx], 
@@ -87,39 +84,67 @@ for indx in dataFrame.index:
     ]
 
     
-    
+    print("\n\n\n----------INDEX: {0}------------".format(indx))
 
     Datas['y'] = Accidents
 
     Datas['type'] = "line"
     Datas['name'] = dataFrame['CountryName'][indx]
-    print(Datas['name'])
+    # Datas['name'] = Countries[indx]
 
+
+    print("\n\n******************Datas*********************")
     print(Datas)
 
-    data.append(Datas)
-    #print(Accidents)
+    dict_data = Datas
 
-#print(data)
+    data.append(dict_data)
+
+    print("\n\n===================DATA===================")
+    print(data)
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
 app.layout = html.Div(children=[
-    html.H1(children='Accidents All oVer the World in Years'),
+    html.H1(
+        children='Accidents all over the world in the period of year 2010 - 2019',
+        style={
+            'textAlign': 'center',
+            'color': colors['text']
+        }
+    ),
 
     html.Div(children='''
-        Graph Analysis of Accident over the world from year 2010 - 2019
-    '''),
+        Graph Analysis of Accidents all over the world from year 2010 - 2019
+    ''', style={
+        'textAlign': 'center',
+        'color': colors['text']
+    }),
 
+    # html.Div(style={
+    #         'textAlign': 'center',
+    #         'color': colors['background']
+    # })
     
     dcc.Graph(
         id='Accident-Graph',
         figure={
             'data': data,
             'layout': {
-                'title': 'Accident Analysis'
+                'title': 'Global Accidents Analysis',
+                'plot_bgcolor': colors['background'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text']
+                }
             }
         }
     )
